@@ -76,6 +76,8 @@ node src/index.js --dry-run --max-reviews 0 --max-per-search 30
 
 ## Versi 2 — Direktori Studio Desain Surabaya
 
+**Publik:** https://miazakii.github.io/surabaya-design-directory-x2/
+
 Folder ini adalah **v2** dari project `surabaya-design-directory`. Frontend dirombak menjadi direktori bergaya arsip cetak:
 
 | Halaman | File | Isi |
