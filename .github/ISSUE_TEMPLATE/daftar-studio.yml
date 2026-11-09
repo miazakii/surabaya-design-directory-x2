@@ -1,0 +1,79 @@
+name: Daftarkan Studio
+description: Daftarkan studio atau agensi desain baru ke Direktori Studio Desain Surabaya.
+title: "[Daftar Studio] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Terima kasih sudah mendaftarkan studio. Pengajuan akan ditinjau manual sebelum tampil di direktori.
+        Pastikan studio berbasis di Surabaya, aktif di minimal satu kategori, dan memiliki karya publik 12 bulan terakhir.
+
+  - type: input
+    id: nama
+    attributes:
+      label: Nama resmi studio
+      placeholder: "Contoh: Studio Desain Contoh"
+    validations:
+      required: true
+
+  - type: input
+    id: alamat
+    attributes:
+      label: Alamat jalan
+      description: Sertakan kelurahan/kecamatan jika ada.
+      placeholder: "Jl. Contoh No. 1, Kec. Gubeng, Surabaya"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: wilayah
+    attributes:
+      label: Wilayah
+      options:
+        - P-SUB · Surabaya Pusat
+        - U-SUB · Surabaya Utara
+        - T-SUB · Surabaya Timur
+        - S-SUB · Surabaya Selatan
+        - B-SUB · Surabaya Barat
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kategori
+    attributes:
+      label: Kategori utama
+      options:
+        - BR · Branding
+        - ED · Editorial
+        - MO · Motion & Animation
+        - AD · Advertising
+        - IL · Illustration
+        - UX · UI/UX
+    validations:
+      required: true
+
+  - type: input
+    id: website
+    attributes:
+      label: Website
+      placeholder: https://studio.example
+
+  - type: input
+    id: instagram
+    attributes:
+      label: Instagram
+      placeholder: "@studio"
+
+  - type: input
+    id: kontak
+    attributes:
+      label: Kontak pengaju
+      description: Email atau WhatsApp yang bisa dihubungi untuk verifikasi.
+    validations:
+      required: true
+
+  - type: textarea
+    id: catatan
+    attributes:
+      label: Catatan tambahan
+      description: Karya terbaru, tautan portofolio, atau informasi lain yang membantu verifikasi.

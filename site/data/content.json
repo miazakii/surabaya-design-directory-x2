@@ -1,0 +1,425 @@
+{
+  "version": 1,
+  "site": {
+    "name": "Direktori Studio Desain Surabaya",
+    "shortName": "DIREKTORI",
+    "accent": "Surabaya",
+    "tagline": "Arsip hidup studio desain di Surabaya.",
+    "description": "Direktori studio dan agensi kreatif di Surabaya berdasarkan lokasi dan spesialisasi.",
+    "url": "https://miazakii.github.io/surabaya-design-directory-x2",
+    "github": "https://github.com/miazakii/surabaya-design-directory-x2",
+    "issueUrl": "https://github.com/miazakii/surabaya-design-directory-x2/issues/new?template=koreksi-data.yml"
+  },
+  "navigation": [
+    {
+      "label": "JELAJAHI",
+      "href": "jelajahi.html"
+    },
+    {
+      "label": "TENTANG",
+      "href": "index.html"
+    },
+    {
+      "label": "DAFTARKAN STUDIO",
+      "href": "daftar.html"
+    }
+  ],
+  "cta": {
+    "label": "DAFTARKAN STUDIO",
+    "href": "daftar.html"
+  },
+  "landing": {
+    "hero": {
+      "kicker": "Direktori terbuka · Surabaya",
+      "title": "Peta ekosistem desain",
+      "highlight": "Surabaya.",
+      "description": "Studio, agensi, konsultan, dan praktisi desain dalam satu direktori yang bisa dicari, difilter, dan dibaca sebagai jaringan — bukan sekadar daftar.",
+      "primary": {
+        "label": "Jelajahi peta",
+        "href": "map.html"
+      },
+      "secondary": {
+        "label": "Lihat kategori",
+        "href": "#kategori"
+      }
+    },
+    "snapshot": {
+      "eyebrow": "Snapshot direktori",
+      "title": "Surabaya, dibaca lewat peta.",
+      "note": "Status usia adalah estimasi batas bawah aktivitas, bukan tanggal berdiri resmi. Data yang belum pasti tetap ditandai agar transparan."
+    },
+    "categories": {
+      "eyebrow": "Jelajahi",
+      "title": "Kategori",
+      "description": "Setiap kategori membawa warna dan konteksnya sendiri. Klik untuk membuka peta dengan filter yang sudah aktif."
+    },
+    "about": {
+      "eyebrow": "Tentang",
+      "title": "Komunitas desain dibaca sebagai jaringan.",
+      "body": "Studio, konsultan, biro iklan, dan praktisi tampil bersamaan sehingga pembaca bisa melihat posisi mereka, siapa yang berada di dekatnya, dan bagaimana ekosistem ini tersusun.",
+      "points": [
+        {
+          "title": "Cari & filter",
+          "text": "Temukan studio berdasarkan nama, kategori, atau lokasi."
+        },
+        {
+          "title": "Baca lewat peta",
+          "text": "Lihat sebaran dan kedekatan antar studio di Surabaya."
+        },
+        {
+          "title": "Transparan",
+          "text": "Data yang belum terverifikasi tetap ditandai, bukan dirapikan diam-diam."
+        }
+      ]
+    },
+    "notes": {
+      "eyebrow": "Catatan data",
+      "title": "Yang perlu diketahui."
+    }
+  },
+  "map": {
+    "title": "Peta · Design Directory Surabaya",
+    "description": "Peta interaktif studio dan agensi desain di Surabaya.",
+    "defaultCenter": [
+      112.745,
+      -7.275
+    ],
+    "defaultZoom": 12,
+    "privacyLabel": "Privasi & disclaimer"
+  },
+  "privacy": {
+    "title": "Privasi & disclaimer",
+    "description": "Data disclaimer dan kebijakan privasi Direktori Studio Desain Surabaya.",
+    "eyebrow": "Transparansi",
+    "intro": "Direktori ini adalah referensi terbuka. Kami berusaha menampilkan data yang berguna sekaligus jujur tentang batasannya.",
+    "principleTitle": "Prinsip kami",
+    "principleBody": "Lebih baik menampilkan data yang belum pasti dengan label jelas daripada menghapusnya diam-diam atau membuatnya terlihat lebih pasti dari yang sebenarnya.",
+    "sections": [
+      {
+        "title": "Sumber & akurasi data",
+        "paragraphs": [
+          "Data dalam direktori ini dikumpulkan dari halaman publik Google Maps (nama, kategori, alamat, kontak, rating, jam buka, dan koordinat) serta estimasi usia dari sinyal publik seperti arsip web, tanggal registrasi domain, copyright situs, dan review tertua.",
+          "Estimasi usia adalah batas bawah aktivitas, bukan tanggal berdiri resmi. Baris berstatus \"Perlu cek manual\" atau \"Tidak dapat dipastikan\" belum terverifikasi dan ditampilkan dengan penanda khusus."
+        ]
+      },
+      {
+        "title": "Informasi yang ditampilkan",
+        "paragraphs": [
+          "Kami menampilkan informasi usaha untuk keperluan referensi B2B: nama usaha, kategori, alamat, telepon, website, email, akun media sosial, rating, jam buka, dan estimasi tahun berdiri.",
+          "Kami tidak mengumpulkan atau menampilkan data anak, data keuangan pribadi, dokumen identitas, maupun data pribadi sensitif lainnya."
+        ]
+      },
+      {
+        "title": "Layanan pihak ketiga",
+        "paragraphs": [
+          "Peta adalah diagram lokal yang digambar dari data direktori. Label peta memakai glyph OpenFreeMap; permintaan teknis ke layanan tersebut dapat memproses alamat IP dan informasi perangkat sesuai kebijakan penyedia.",
+          "Font, skrip, dan aset antarmuka disajikan dari domain direktori ini. Tidak ada Google Fonts atau CDN eksternal untuk aset UI."
+        ]
+      },
+      {
+        "title": "Dasar privasi",
+        "paragraphs": [
+          "Pemrosesan informasi mengikuti Undang-Undang Pelindungan Data Pribadi No. 27 Tahun 2022 (UU PDP). Tampil di direktori ini tidak berarti usaha atau orang tersebut adalah klien, mitra, atau sponsor penyelenggara."
+        ]
+      },
+      {
+        "title": "Hak Anda",
+        "paragraphs": [
+          "Anda dapat meminta koreksi, pembatasan, penghapusan, atau keberatan atas informasi Anda kapan saja. Permintaan akan kami proses tanpa biaya."
+        ]
+      }
+    ],
+    "contact": {
+      "title": "Kontak",
+      "body": "Untuk koreksi atau penghapusan data, ajukan melalui formulir koreksi data. Sertakan nama studio dan detail perubahan. Kami akan menindaklanjuti melalui GitHub.",
+      "sensitive": "Jika permintaan bersifat sensitif, jangan cantumkan data pribadi di issue publik. Tulis bahwa Anda ingin dihubungi secara privat, lalu kami akan mengatur jalur komunikasi yang sesuai.",
+      "ctaLabel": "Ajukan koreksi data"
+    }
+  },
+  "seo": {
+    "home": {
+      "title": "Direktori Studio Desain Surabaya",
+      "description": "Arsip hidup studio dan agensi desain di Surabaya berdasarkan lokasi dan spesialisasi.",
+      "ogImage": "og-image.png",
+      "canonical": "https://miazakii.github.io/surabaya-design-directory-x2/"
+    },
+    "map": {
+      "title": "Jelajahi · Direktori Studio Desain Surabaya",
+      "description": "Peta dan indeks 100 studio desain di Surabaya berdasarkan kategori dan wilayah.",
+      "ogImage": "og-image.png",
+      "canonical": "https://miazakii.github.io/surabaya-design-directory-x2/jelajahi.html"
+    },
+    "privacy": {
+      "title": "Privasi & Disclaimer · Direktori Studio Desain Surabaya",
+      "description": "Data disclaimer dan kebijakan privasi Direktori Studio Desain Surabaya.",
+      "ogImage": "og-image.png",
+      "canonical": "https://miazakii.github.io/surabaya-design-directory-x2/privacy.html"
+    }
+  },
+  "footer": {
+    "text": "Direktori Studio Desain Surabaya — arsip hidup.",
+    "description": "Referensi terbuka untuk memetakan studio, agensi, dan praktisi desain di Surabaya.",
+    "links": [
+      {
+        "label": "Jelajahi",
+        "href": "jelajahi.html"
+      },
+      {
+        "label": "Tentang",
+        "href": "index.html"
+      },
+      {
+        "label": "Daftarkan studio",
+        "href": "daftar.html"
+      },
+      {
+        "label": "Privasi & disclaimer",
+        "href": "privacy.html"
+      },
+      {
+        "label": "GitHub",
+        "href": "https://github.com/miazakii/surabaya-design-directory-x2"
+      }
+    ]
+  },
+  "settings": {
+    "showRatings": true,
+    "showOpeningHours": true,
+    "showFoundedYear": true
+  },
+  "v2": {
+    "brand": {
+      "kicker": "DIREKTORI",
+      "subtitle": "STUDIO DESAIN SURABAYA"
+    },
+    "nav": [
+      {
+        "label": "JELAJAHI",
+        "href": "jelajahi.html",
+        "key": "map"
+      },
+      {
+        "label": "TENTANG",
+        "href": "index.html",
+        "key": "about"
+      },
+      {
+        "label": "DAFTARKAN STUDIO",
+        "href": "daftar.html",
+        "key": "register"
+      }
+    ],
+    "map": {
+      "title": "Jelajahi direktori",
+      "eyebrow": "INDEKS · A-Z",
+      "countLabel": "studio ditampilkan",
+      "searchPlaceholder": "Cari nama studio…",
+      "filterCategoryLabel": "KATEGORI",
+      "filterRegionLabel": "WILAYAH",
+      "allLabel": "SEMUA",
+      "legendTitle": "LEGENDA",
+      "legendNote": "Kode pin = kategori utama. Warna = identitas studio.",
+      "emptyTitle": "Tidak ada studio yang cocok.",
+      "emptyBody": "Coba hapus filter atau cari dengan kata lain.",
+      "ctaLabel": "Studio Anda belum ada?",
+      "ctaLink": "DAFTARKAN →",
+      "selectedLabel": "Studio terpilih",
+      "openProfile": "BUKA PROFIL →",
+      "mapErrorTitle": "Peta tidak dapat dimuat",
+      "mapErrorBody": "Koneksi tile peta gagal atau WebGL tidak tersedia. Indeks studio tetap bisa dibaca.",
+      "resetView": "Kembalikan tampilan",
+      "zoomIn": "Perbesar peta",
+      "zoomOut": "Perkecil peta"
+    },
+    "about": {
+      "eyebrow": "TENTANG DIREKTORI",
+      "title": "Arsip hidup studio desain di Surabaya.",
+      "description": "Direktori ini memetakan studio dan agensi kreatif di Surabaya berdasarkan lokasi dan spesialisasi, supaya mahasiswa desain dan komunitas kreatif bisa menemukan referensi profesional di kota sendiri.",
+      "book": {
+        "eyebrow": "PENDAMPING BUKU CETAK",
+        "title": "Buku Direktori Studio Desain ADGI Surabaya",
+        "body": "Situs ini adalah versi digital dari buku direktori, tugas akhir Muhammad Nur Falzin (D4 Desain Grafis), yang didukung ADGI Surabaya Chapter melalui program Surabaya Design Census. Setiap studio di buku punya QR menu menuju profilnya di sini. Setelah buku dicetak, koreksi data dilakukan di situs ini.",
+        "coverLabel": "SAMPUL BUKU · [gambar]"
+      },
+      "criteriaTitle": "Siapa yang masuk direktori",
+      "criteria": [
+        {
+          "code": "KRITERIA A",
+          "title": "Studio atau agensi yang berbasis di Surabaya."
+        },
+        {
+          "code": "KRITERIA B",
+          "title": "Aktif di minimal satu kategori yang tercantum."
+        },
+        {
+          "code": "KRITERIA C",
+          "title": "Punya website atau Instagram yang menampilkan karya 12 bulan terakhir."
+        }
+      ],
+      "criteriaNote": "Setiap data diverifikasi: alamat dan koordinat dicek di peta, tautan dicek aktif, dan kategori dicocokkan dengan karya studio. Tanggal verifikasi terakhir tampil di setiap profil.",
+      "codeTitle": "Cara membaca kode",
+      "codeCategoryTitle": "Kategori",
+      "codeRegionTitle": "Wilayah",
+      "codeNote": "Kode studio = kode wilayah + nomor urut, sama dengan penomoran dan tab di buku. Contoh: P-SUB 01.",
+      "registerTitle": "Terdaftar atau ingin koreksi?",
+      "registerBody": "Studio bisa mendaftar, memperbarui data, atau meminta listing dihapus. Semua pengajuan ditinjau dulu sebelum tampil, dan permintaan koreksi atau penghapusan ditanggapi dalam 7 hari.",
+      "registerPrimary": "DAFTARKAN STUDIO →",
+      "registerSecondary": "AJUKAN KOREKSI",
+      "footerLeft": "Direktori Studio Desain Surabaya · Arsip 2026–2027",
+      "footerRight": "Data dikelola oleh [NAMA PENGELOLA DATA]"
+    },
+    "register": {
+      "eyebrow": "FORMULIR · DITINJAU MANUAL",
+      "title": "Daftarkan atau perbarui data studio.",
+      "description": "Pilih kebutuhan Anda. Pengajuan masuk antrean tinjauan; tidak ada yang tampil di peta sebelum disetujui.",
+      "tabs": [
+        {
+          "key": "baru",
+          "label": "01 Daftar baru"
+        },
+        {
+          "key": "koreksi",
+          "label": "02 Koreksi data"
+        },
+        {
+          "key": "hapus",
+          "label": "03 Hapus listing"
+        }
+      ],
+      "intro": {
+        "baru": {
+          "title": "Daftarkan studio baru",
+          "body": "Untuk studio atau agensi di Surabaya yang aktif di minimal satu kategori dan punya karya publik 12 bulan terakhir."
+        },
+        "koreksi": {
+          "title": "Ajukan koreksi data",
+          "body": "Gunakan formulir ini jika ada data yang berubah, tidak akurat, atau perlu dilengkapi."
+        },
+        "hapus": {
+          "title": "Minta penghapusan listing",
+          "body": "Kami akan meninjau permintaan dan menghapus data setelah identitas pemilik terverifikasi."
+        }
+      },
+      "checklistTitle": "SIAPKAN",
+      "checklist": [
+        "Nama resmi studio",
+        "Alamat jalan dan wilayah (P/U/T/S/B-SUB)",
+        "Satu kategori utama, maksimal dua tambahan",
+        "Website atau Instagram (minimal salah satu)",
+        "Logo atau foto sampul yang boleh dipakai di web (opsional)"
+      ],
+      "formCta": "BUKA FORMULIR PENDAFTARAN",
+      "formNote": "Membuka formulir eksternal di tab baru.",
+      "formUrl": "https://github.com/miazakii/surabaya-design-directory-x2/issues/new?template=daftar-studio.yml",
+      "stepsTitle": "Setelah Anda mengirim",
+      "steps": [
+        {
+          "number": "01",
+          "title": "Diterima",
+          "body": "Pengajuan masuk antrean tinjauan."
+        },
+        {
+          "number": "02",
+          "title": "Diverifikasi",
+          "body": "Alamat, koordinat, tautan, dan kategori dicek."
+        },
+        {
+          "number": "03",
+          "title": "Terbit",
+          "body": "Studio muncul di peta dengan kode dan URL tetap."
+        }
+      ],
+      "note": "Koreksi dan penghapusan ditanggapi dalam 7 hari. Kontak pribadi hanya ditampilkan dengan persetujuan studio."
+    },
+    "studio": {
+      "backLabel": "← KEMBALI KE PETA",
+      "archiveLabel": "Arsip 2026–2027",
+      "indexTitle": "INDEKS",
+      "sections": [
+        {
+          "id": "tentang",
+          "number": "01",
+          "label": "Tentang"
+        },
+        {
+          "id": "tim",
+          "number": "02",
+          "label": "Tim"
+        },
+        {
+          "id": "spesialisasi",
+          "number": "03",
+          "label": "Spesialisasi"
+        },
+        {
+          "id": "proses",
+          "number": "04",
+          "label": "Pendekatan & proses"
+        },
+        {
+          "id": "portofolio",
+          "number": "05",
+          "label": "Portofolio & dokumentasi"
+        },
+        {
+          "id": "kontak",
+          "number": "06",
+          "label": "Kontak"
+        }
+      ],
+      "factFounded": "BERDIRI",
+      "factType": "JENIS",
+      "factRegion": "WILAYAH",
+      "mapLabel": "BUKA DI GOOGLE MAPS",
+      "codeLabel": "Kode studio",
+      "pageLabel": "Halaman buku",
+      "verifiedLabel": "Terakhir diverifikasi",
+      "qrLabel": "Kode QR yang sama tercetak di halaman studio pada buku direktori.",
+      "teamEmpty": "Data tim belum diisi. Kirim koreksi jika Anda bagian dari studio ini.",
+      "processEmpty": "Deskripsi proses belum diisi.",
+      "portfolioEmpty": "Dokumentasi belum diisi.",
+      "contactEmpty": "Kontak belum tersedia.",
+      "correction": "Ada data yang keliru? Ajukan koreksi",
+      "sourceNote": "Status usia adalah estimasi batas bawah aktivitas, bukan tanggal berdiri resmi.",
+      "tagsNote": "Kategori utama ditandai warna penuh. Tag bergaris putus-putus adalah spesialisasi bebas dari studio.",
+      "portfolioTabs": [
+        "Semua",
+        "People",
+        "Environment",
+        "Activity",
+        "Process",
+        "Work"
+      ],
+      "copyLink": "SALIN TAUTAN",
+      "copied": "TAUTAN TERSALIN",
+      "website": "WEBSITE",
+      "instagram": "INSTAGRAM",
+      "maps": "GOOGLE MAPS",
+      "email": "EMAIL",
+      "phone": "TELEPON",
+      "address": "ALAMAT",
+      "hours": "JAM BUKA",
+      "evidence": "BUKTI USIA",
+      "notFoundTitle": "Studio tidak ditemukan.",
+      "notFoundBody": "Tautan mungkin sudah berubah. Kembali ke peta untuk memilih studio lain."
+    },
+    "seo": {
+      "about": {
+        "title": "Tentang · Direktori Studio Desain Surabaya",
+        "description": "Arsip hidup studio desain di Surabaya. Kriteria, kode wilayah, dan cara berkontribusi."
+      },
+      "map": {
+        "title": "Jelajahi · Direktori Studio Desain Surabaya",
+        "description": "Peta dan indeks studio desain di Surabaya berdasarkan kategori dan wilayah."
+      },
+      "register": {
+        "title": "Daftarkan Studio · Direktori Studio Desain Surabaya",
+        "description": "Daftarkan studio baru, ajukan koreksi data, atau minta penghapusan listing."
+      },
+      "studio": {
+        "title": "Profil Studio · Direktori Studio Desain Surabaya",
+        "description": "Profil studio desain di Surabaya."
+      }
+    }
+  }
+}

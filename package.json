@@ -1,0 +1,60 @@
+{
+  "name": "studio-desain-surabaya",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Kumpulkan 100 studio desain/branding di Surabaya (usia >= 2 tahun) via Apify Google Maps Scraper, hasilkan Excel.",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "scrape": "node src/index.js",
+    "demo": "OUTPUT_FILE=demo-surabaya.xlsx node src/index.js --input fixtures/sample-places.json",
+    "build:site": "node site/scripts/build-directory-data.js",
+    "migrate:v2": "node site/scripts/migrate-v2.js",
+    "import:csv": "node site/scripts/build-directory-data.js --force && node site/scripts/migrate-v2.js",
+    "validate:site": "node site/scripts/validate-directory.js",
+    "check:data": "node site/scripts/check-data-quality.js",
+    "build:seo": "node site/scripts/build-seo.js",
+    "test": "node --test test/*.test.js",
+    "serve:site": "npm run build && python3 -m http.server 8000 --directory dist",
+    "admin": "npm run build:web && node admin-server.mjs",
+    "clean": "node -e \"import('node:fs').then((fs) => fs.rmSync('data', { recursive: true, force: true }))\"",
+    "dev": "vite --config frontend/vite.config.js",
+    "build:web": "vite build --config frontend/vite.config.js",
+    "build": "npm run build:web && npm run build:meta && npm run build:seo",
+    "preview": "vite preview --config frontend/vite.config.js",
+    "build:meta": "node site/scripts/build-meta.js"
+  },
+  "dependencies": {
+    "@radix-ui/react-alert-dialog": "^1.1.4",
+    "@radix-ui/react-dialog": "^1.1.4",
+    "@radix-ui/react-label": "^2.1.1",
+    "@radix-ui/react-progress": "^1.1.1",
+    "@radix-ui/react-scroll-area": "^1.2.2",
+    "@radix-ui/react-select": "^2.1.4",
+    "@radix-ui/react-separator": "^1.1.1",
+    "@radix-ui/react-slot": "^1.1.1",
+    "@radix-ui/react-switch": "^1.1.2",
+    "@radix-ui/react-tabs": "^1.1.2",
+    "apify-client": "^2.11.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "dotenv": "^16.4.5",
+    "exceljs": "^4.4.0",
+    "lucide-react": "^0.468.0",
+    "maplibre-gl": "6.17.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^2.6.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.7.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.32",
+    "tailwindcss": "^3.4.17",
+    "tailwindcss-animate": "^1.0.7",
+    "vite": "^6.4.5"
+  }
+}

@@ -1,0 +1,11 @@
+node_modules/
+/data/
+.env
+.DS_Store
+*.log
+.commandcode/
+.admin-token
+/site/data/backups/
+/site/studios/
+/site/sitemap.xml
+/dist/
