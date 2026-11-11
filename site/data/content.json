@@ -112,7 +112,7 @@
       {
         "title": "Layanan pihak ketiga",
         "paragraphs": [
-          "Peta memakai tile OpenStreetMap sebagai peta dasar. Mode Diagram mematikan peta dasar dan hanya menampilkan diagram wilayah. Permintaan teknis ke tile.openstreetmap.org dapat memproses alamat IP dan informasi perangkat sesuai kebijakan penyedia.",
+          "Peta memakai tile dan data batas wilayah OpenStreetMap. Mode Diagram mematikan peta dasar dan hanya menampilkan diagram batas wilayah. Permintaan teknis ke tile.openstreetmap.org dapat memproses alamat IP dan informasi perangkat sesuai kebijakan penyedia. Data batas wilayah digunakan dengan lisensi ODbL.",
           "Font, skrip, dan aset antarmuka disajikan dari domain direktori ini. Tidak ada Google Fonts atau CDN eksternal untuk aset UI."
         ]
       },
@@ -218,7 +218,7 @@
       "filterRegionLabel": "WILAYAH",
       "allLabel": "SEMUA",
       "legendTitle": "LEGENDA",
-      "legendNote": "Kode pin = kategori utama. Warna = identitas studio. Garis putus-putus = batas wilayah.",
+      "legendNote": "Kode pin = kategori utama. Warna = identitas studio. Garis tebal = batas wilayah. Garis tipis = batas kecamatan.",
       "emptyTitle": "Tidak ada studio yang cocok.",
       "emptyBody": "Coba hapus filter atau cari dengan kata lain.",
       "ctaLabel": "Studio Anda belum ada?",

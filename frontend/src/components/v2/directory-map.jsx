@@ -3,7 +3,13 @@ import * as maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
 import { Minus, Plus, RotateCcw } from 'lucide-react';
-import { REGION_SHAPES } from '@/lib/surabaya-regions';
+import {
+  REGION_LABELS,
+  REGION_META,
+  SURABAYA_CITY_GEOJSON,
+  SURABAYA_KECAMATAN_GEOJSON,
+  SURABAYA_REGION_GEOJSON,
+} from '@/lib/surabaya-boundaries';
 import {
   categoryInfo,
   categoryInfos,
@@ -19,31 +25,6 @@ maplibregl.setWorkerUrl(maplibreWorkerUrl);
 const DEFAULT_CENTER = [112.745, -7.275];
 const DEFAULT_ZOOM = 11.6;
 const DETAIL_ZOOM = 12.4;
-
-const LAND_POLYGON = [
-  [112.54, -7.44],
-  [112.95, -7.44],
-  [112.99, -7.04],
-  [112.54, -7.04],
-];
-
-const CITY_OUTLINE = [
-  [112.618, -7.352],
-  [112.652, -7.36],
-  [112.69, -7.35],
-  [112.724, -7.356],
-  [112.758, -7.346],
-  [112.79, -7.334],
-  [112.818, -7.305],
-  [112.826, -7.272],
-  [112.812, -7.24],
-  [112.79, -7.214],
-  [112.752, -7.204],
-  [112.712, -7.212],
-  [112.674, -7.232],
-  [112.644, -7.262],
-  [112.62, -7.3],
-];
 
 const OSM_TILES = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 
@@ -103,39 +84,120 @@ function popupHtml(studio, categoryList, regionList) {
     </div>`;
 }
 
-function StaticFallback({ studios, categories, regions, hoveredId, selectedId, onSelect, onHover, message }) {
+function geometryBounds(geometry) {
+  let west = Infinity;
+  let east = -Infinity;
+  let south = Infinity;
+  let north = -Infinity;
+  const visit = (coordinates) => {
+    if (typeof coordinates[0] === 'number') {
+      const [lng, lat] = coordinates;
+      west = Math.min(west, lng);
+      east = Math.max(east, lng);
+      south = Math.min(south, lat);
+      north = Math.max(north, lat);
+      return;
+    }
+    coordinates.forEach(visit);
+  };
+  visit(geometry.coordinates);
+  return { west, east, south, north };
+}
+
+function makeProject(bounds, width = 1000, height = 700, padding = 34) {
+  const lngSpan = bounds.east - bounds.west;
+  const latSpan = bounds.north - bounds.south;
+  const scale = Math.min((width - padding * 2) / lngSpan, (height - padding * 2) / latSpan);
+  const offsetX = (width - lngSpan * scale) / 2;
+  const offsetY = (height - latSpan * scale) / 2;
+  return ([lng, lat]) => [
+    offsetX + (lng - bounds.west) * scale,
+    offsetY + (bounds.north - lat) * scale,
+  ];
+}
+
+function ringToPath(ring, project) {
+  return `${ring
+    .map((coordinate, index) => {
+      const [x, y] = project(coordinate);
+      return `${index === 0 ? 'M' : 'L'}${x.toFixed(1)} ${y.toFixed(1)}`;
+    })
+    .join(' ')} Z`;
+}
+
+function geometryToPath(geometry, project) {
+  const polygons = geometry.type === 'Polygon' ? [geometry.coordinates] : geometry.coordinates;
+  return polygons.map((polygon) => polygon.map((ring) => ringToPath(ring, project)).join(' ')).join(' ');
+}
+
+const FALLBACK_BOUNDS = geometryBounds(SURABAYA_CITY_GEOJSON);
+const fallbackProject = makeProject(FALLBACK_BOUNDS);
+const FALLBACK_CITY_PATH = geometryToPath(SURABAYA_CITY_GEOJSON, fallbackProject);
+const FALLBACK_REGION_PATHS = SURABAYA_REGION_GEOJSON.features.map((feature) => ({
+  code: feature.properties.code,
+  color: feature.properties.color,
+  path: geometryToPath(feature.geometry, fallbackProject),
+}));
+const FALLBACK_KECAMATAN_PATHS = SURABAYA_KECAMATAN_GEOJSON.features.map((feature) =>
+  geometryToPath(feature.geometry, fallbackProject),
+);
+
+function StaticFallback({ studios, categories, hoveredId, selectedId, onSelect, onHover, message }) {
   const categoryList = categoryMap(categories);
   return (
     <div className="absolute inset-0 overflow-hidden bg-[#e9e6de]">
       <div className="absolute inset-0 v2-dots opacity-70" />
       <svg viewBox="0 0 1000 700" className="absolute inset-0 h-full w-full" aria-hidden="true">
-        <g fill="none" stroke="#151515" strokeOpacity="0.55" strokeWidth="1.2" strokeDasharray="6 6">
-          <path d="M60 520 L60 190 L250 120 L520 100 L760 150 L900 330 L880 560 L650 620 L330 640 Z" />
-          <path d="M250 120 L250 430 L520 470 L520 100" />
-          <path d="M520 100 L520 470 L880 560" />
-          <path d="M520 470 L650 620" />
-          <path d="M60 520 L250 430" />
-        </g>
-        <text x="500" y="80" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="13" letterSpacing="5" fill="#6f6a61">
+        <path d={FALLBACK_CITY_PATH} fill="#e9e6de" stroke="#151515" strokeWidth="2" strokeLinejoin="round" />
+        {FALLBACK_REGION_PATHS.map((region) => (
+          <path key={region.code} d={region.path} fill={region.color} fillOpacity="0.18" stroke="none" />
+        ))}
+        {FALLBACK_KECAMATAN_PATHS.map((path, index) => (
+          <path
+            key={index}
+            d={path}
+            fill="none"
+            stroke="#151515"
+            strokeOpacity="0.32"
+            strokeWidth="0.8"
+            strokeDasharray="3 3"
+          />
+        ))}
+        {REGION_META.map((region) => {
+          const [x, y] = fallbackProject(REGION_LABELS[region.code]);
+          return (
+            <text
+              key={region.code}
+              x={x}
+              y={y}
+              textAnchor="middle"
+              fontFamily="ui-monospace, monospace"
+              fontSize="10"
+              fontWeight="700"
+              letterSpacing="2"
+              fill="#3f3b35"
+              stroke="#f1efe9"
+              strokeWidth="4"
+              strokeLinejoin="round"
+              paintOrder="stroke"
+            >
+              {region.code}
+            </text>
+          );
+        })}
+        <text x="500" y="42" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" fontWeight="700" letterSpacing="4" fill="#5f5a51" stroke="#f1efe9" strokeWidth="4" paintOrder="stroke">
           SELAT MADURA
         </text>
-        <g fontFamily="ui-monospace, monospace" fontSize="9" letterSpacing="2" fill="#6f6a61">
-          <text x="150" y="300">B-SUB</text>
-          <text x="500" y="180">U-SUB</text>
-          <text x="505" y="365">P-SUB</text>
-          <text x="780" y="300">T-SUB</text>
-          <text x="500" y="580">S-SUB</text>
-        </g>
       </svg>
       {groupStudios(studios, 11.6).map((group) => {
-        const { x, y } = relativePinPosition({ longitude: group.lng, latitude: group.lat });
+        const [x, y] = fallbackProject([group.lng, group.lat]);
         const info = categoryInfo(categoryList, group.studio);
         const isCluster = group.count > 1;
         return (
           <div
             key={group.key}
             className="absolute -translate-x-1/2 -translate-y-full"
-            style={{ left: `${x}%`, top: `${y}%` }}
+            style={{ left: `${(x / 1000) * 100}%`, top: `${(y / 700) * 100}%` }}
           >
             <button
               type="button"
@@ -213,12 +275,8 @@ export function DirectoryMap({
   const mapRef = useRef(null);
   const loadedRef = useRef(false);
   const markersRef = useRef([]);
+  const regionMarkersRef = useRef([]);
   const popupRef = useRef(null);
-  const landRef = useRef(null);
-  const cityRef = useRef(null);
-  const regionRefs = useRef([]);
-  const regionLabelRefs = useRef([]);
-  const waterLabelRef = useRef(null);
   const [failed, setFailed] = useState(false);
   const [ready, setReady] = useState(false);
   const [mapZoom, setMapZoom] = useState(zoom);
@@ -241,31 +299,6 @@ export function DirectoryMap({
   onHoverRef.current = onHover;
   selectedRef.current = selectedId;
   hoveredRef.current = hoveredId;
-
-  const updateOverlay = () => {
-    const map = mapRef.current;
-    if (!map) return;
-    const point = ([lng, lat]) => {
-      const projected = map.project([lng, lat]);
-      return `${projected.x},${projected.y}`;
-    };
-    landRef.current?.setAttribute('points', LAND_POLYGON.map(point).join(' '));
-    cityRef.current?.setAttribute('points', CITY_OUTLINE.map(point).join(' '));
-    REGION_SHAPES.forEach((shape, index) => {
-      regionRefs.current[index]?.setAttribute('points', shape.polygon.map(point).join(' '));
-      const label = map.project(shape.labelAt);
-      const text = regionLabelRefs.current[index];
-      if (text) {
-        text.setAttribute('x', label.x);
-        text.setAttribute('y', label.y);
-      }
-    });
-    const water = map.project([112.74, -7.205]);
-    if (waterLabelRef.current) {
-      waterLabelRef.current.setAttribute('x', water.x);
-      waterLabelRef.current.setAttribute('y', water.y);
-    }
-  };
 
   useEffect(() => {
     if (!containerRef.current) return undefined;
@@ -307,6 +340,60 @@ export function DirectoryMap({
         setFailed(false);
         setReady(true);
 
+        regionMarkersRef.current = REGION_META.map((region) => {
+          const labelAt = REGION_LABELS[region.code];
+          if (!labelAt) return null;
+          const element = document.createElement('div');
+          element.className = 'v2-region-label';
+          element.innerHTML = `<span class="v2-region-label__swatch" style="background:${region.color}"></span><strong>${region.code}</strong><span>${region.label.replace('Surabaya ', '')}</span>`;
+          return new maplibregl.Marker({ element, anchor: 'center' })
+            .setLngLat(labelAt)
+            .addTo(map);
+        }).filter(Boolean);
+
+        map.addSource('region-shapes', { type: 'geojson', data: SURABAYA_REGION_GEOJSON });
+        map.addLayer({
+          id: 'region-fill',
+          type: 'fill',
+          source: 'region-shapes',
+          paint: {
+            'fill-color': ['get', 'color'],
+            'fill-opacity': 0.07,
+          },
+        });
+        map.addLayer({
+          id: 'region-line',
+          type: 'line',
+          source: 'region-shapes',
+          paint: {
+            'line-color': '#151515',
+            'line-width': 1.5,
+            'line-opacity': 0.72,
+          },
+        });
+        map.addSource('kecamatan-shapes', { type: 'geojson', data: SURABAYA_KECAMATAN_GEOJSON });
+        map.addLayer({
+          id: 'kecamatan-line',
+          type: 'line',
+          source: 'kecamatan-shapes',
+          paint: {
+            'line-color': '#151515',
+            'line-width': 0.7,
+            'line-dasharray': [2, 3],
+            'line-opacity': 0.38,
+          },
+        });
+        map.addSource('city-shape', { type: 'geojson', data: SURABAYA_CITY_GEOJSON });
+        map.addLayer({
+          id: 'city-line',
+          type: 'line',
+          source: 'city-shape',
+          paint: {
+            'line-color': '#151515',
+            'line-width': 1.8,
+          },
+        });
+
         const points = studiosRef.current
           .filter((studio) => Number.isFinite(Number(studio.latitude)) && Number.isFinite(Number(studio.longitude)))
           .map((studio) => [Number(studio.longitude), Number(studio.latitude)]);
@@ -326,11 +413,6 @@ export function DirectoryMap({
           maxWidth: '280px',
         });
 
-        updateOverlay();
-        map.on('move', updateOverlay);
-        map.on('zoom', updateOverlay);
-        map.on('resize', updateOverlay);
-
         setMapZoom(map.getZoom());
         map.on('zoomend', () => setMapZoom(map.getZoom()));
       });
@@ -345,6 +427,8 @@ export function DirectoryMap({
       popupRef.current?.remove();
       markersRef.current.forEach((marker) => marker.remove());
       markersRef.current = [];
+      regionMarkersRef.current.forEach((marker) => marker.remove());
+      regionMarkersRef.current = [];
       map?.remove();
       mapRef.current = null;
     };
@@ -357,6 +441,9 @@ export function DirectoryMap({
     if (!map || !loadedRef.current) return;
     if (map.getLayer('osm')) {
       map.setLayoutProperty('osm', 'visibility', basemap === 'osm' ? 'visible' : 'none');
+    }
+    if (map.getLayer('region-fill')) {
+      map.setPaintProperty('region-fill', 'fill-opacity', basemap === 'osm' ? 0.07 : 0.16);
     }
   }, [basemap, ready]);
 
@@ -476,64 +563,6 @@ export function DirectoryMap({
   return (
     <div className="v2-map relative h-full w-full">
       <div ref={containerRef} className="h-full w-full" role="region" aria-label="Peta studio desain Surabaya" />
-
-      <svg className="v2-map-overlay pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true">
-        <polygon
-          ref={landRef}
-          fill={basemap === 'paper' ? '#e9e6de' : 'rgba(241,239,233,0.10)'}
-          stroke="#151515"
-          strokeWidth="1.2"
-        />
-        <polygon ref={cityRef} fill="none" stroke="#151515" strokeWidth="2" strokeLinejoin="round" />
-        {REGION_SHAPES.map((shape, index) => (
-          <polygon
-            key={shape.code}
-            ref={(element) => {
-              regionRefs.current[index] = element;
-            }}
-            fill="rgba(241,239,233,0.05)"
-            stroke="#151515"
-            strokeWidth="1.15"
-            strokeDasharray="5 5"
-            strokeOpacity="0.55"
-          />
-        ))}
-        {REGION_SHAPES.map((shape, index) => (
-          <text
-            key={`${shape.code}-label`}
-            ref={(element) => {
-              regionLabelRefs.current[index] = element;
-            }}
-            className="v2-mono"
-            fontSize="10"
-            fontWeight="700"
-            letterSpacing="2"
-            fill="#3f3b35"
-            stroke="#f1efe9"
-            strokeWidth="4"
-            strokeLinejoin="round"
-            paintOrder="stroke"
-            textAnchor="middle"
-          >
-            {shape.label}
-          </text>
-        ))}
-        <text
-          ref={waterLabelRef}
-          className="v2-mono v2-map-water-label"
-          fontSize="11"
-          fontWeight="700"
-          letterSpacing="4"
-          fill="#5f5a51"
-          stroke="#f1efe9"
-          strokeWidth="4"
-          strokeLinejoin="round"
-          paintOrder="stroke"
-          textAnchor="middle"
-        >
-          SELAT MADURA
-        </text>
-      </svg>
 
       <div className="absolute right-3 top-3 z-10 flex border border-[var(--v2-line)] bg-[var(--v2-paper-soft)] v2-offset-sm sm:right-4 sm:top-4">
         <button

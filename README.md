@@ -91,14 +91,15 @@ Folder ini adalah **v2** dari project `surabaya-design-directory`. Frontend diro
 Data v2 menambahkan `categories` (6 kategori), `regions` (5 wilayah), `regionCode`, `code`, `tags`, `description`, `specializations`, `bookPage`, `verifiedAt`, `team`, `process`, dan `portfolio` di `site/data/directory.json`. Field editorial baru sengaja dibiarkan kosong/placeholder agar tidak mengarang data.
 
 ```bash
-npm run migrate:v2     # tambah field v2 ke directory.json (aman dijalankan ulang)
+npm run migrate:v2       # tambah field v2 + cocokkan wilayah dari batas kecamatan
+npm run build:boundaries # regenerasi batas kecamatan/wilayah dari OpenStreetMap
 npm run dev            # http://localhost:5173/jelajahi.html
 npm run build          # React + metadata + halaman studio statis
 npm run validate:site  # validasi data & konten
 npm test
 ```
 
-Peta memakai MapLibre dengan peta dasar OpenStreetMap (grayscale) + overlay SVG batas wilayah + cluster HTML. Tombol **DIAGRAM** menyembunyikan peta dasar dan menampilkan diagram wilayah saja. Saat zoom kota, studio dikelompokkan (cluster) agar 100 pin tidak bertumpuk; pin detail muncul saat zoom diperbesar. Jika WebGL/tile gagal, halaman menampilkan peta cadangan bergaya diagram dan indeks tetap bisa dipakai.
+Peta memakai MapLibre dengan peta dasar OpenStreetMap (grayscale), batas kecamatan asli dari OpenStreetMap, batas 5 wilayah hasil gabungan kecamatan, dan cluster HTML. Tombol **DIAGRAM** menyembunyikan peta dasar dan menampilkan diagram wilayah saja. Saat zoom kota, studio dikelompokkan (cluster) agar 100 pin tidak bertumpuk; pin detail muncul saat zoom diperbesar. Jika WebGL/tile gagal, halaman menampilkan peta cadangan bergaya diagram dan indeks tetap bisa dipakai.
 
 ## Website & admin lokal
 

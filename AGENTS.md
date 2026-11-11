@@ -15,11 +15,12 @@ Repo: `https://github.com/miazakii/surabaya-design-directory-x2` (branch `main`)
 
 Folder ini adalah v2 dari `surabaya-design-directory`. Frontend memakai gaya arsip cetak: halaman `index.html` (Tentang), `jelajahi.html` (peta + indeks), `studio.html?id=...` (profil), `daftar.html` (pendaftaran/koreksi), dan `privacy.html`. Data v2 ditandai `schemaVersion: 2` dan punya `categories` (6), `regions` (5), `regionCode`, `code`, `tags`, `description`, `specializations`, `bookPage`, `verifiedAt`, `team`, `process`, `portfolio`.
 
-- Migrasi data: `npm run migrate:v2` (`site/scripts/migrate-v2.js`).
+- Migrasi data: `npm run migrate:v2` (`site/scripts/migrate-v2.js`). Wilayah studio dicocokkan dengan polygon wilayah hasil gabungan kecamatan.
+- Batas wilayah: `npm run build:boundaries` (`site/scripts/build-boundaries.js`) mengambil 31 kecamatan Surabaya dari OpenStreetMap, menggabungkannya menjadi 5 wilayah, lalu menulis `frontend/src/lib/surabaya-boundaries.js`.
 - Komponen v2: `frontend/src/components/v2/`.
 - Halaman v2: `frontend/src/pages/AboutPage.jsx`, `DirectoryPage.jsx`, `StudioPage.jsx`, `RegisterPage.jsx`.
 - Halaman studio statis untuk SEO dibuat oleh `site/scripts/build-seo.js` dengan template v2.
-- Peta memakai MapLibre dengan peta dasar OpenStreetMap (grayscale), overlay SVG wilayah, dan cluster HTML. Mode DIAGRAM menyembunyikan peta dasar. Tile OSM dimuat dari `tile.openstreetmap.org` dan wajib mempertahankan atribusi.
+- Peta memakai MapLibre dengan peta dasar OpenStreetMap (grayscale), batas kecamatan asli, batas wilayah gabungan, label wilayah, dan cluster HTML. Mode DIAGRAM menyembunyikan peta dasar. Tile OSM dimuat dari `tile.openstreetmap.org` dan wajib mempertahankan atribusi. Batas wilayah berasal dari OpenStreetMap (ODbL); jangan hapus atribusi.
 
 ## Struktur penting
 

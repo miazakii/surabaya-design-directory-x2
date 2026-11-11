@@ -593,3 +593,48 @@
     display: none;
   }
 }
+
+.v2-region-label {
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid var(--v2-line);
+  background: rgba(246, 244, 238, 0.94);
+  padding: 2px 5px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 2px 2px 0 var(--v2-ink);
+  pointer-events: none;
+}
+
+.v2-region-label strong {
+  font-weight: 700;
+}
+
+.v2-region-label > span:last-child {
+  color: var(--v2-muted);
+  font-weight: 600;
+}
+
+.v2-region-label__swatch {
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border: 1px solid var(--v2-line);
+}
+
+@media (max-width: 640px) {
+  .v2-region-label {
+    font-size: 7px;
+    padding: 1px 4px;
+  }
+}
+
+.v2-map .maplibregl-marker.v2-region-label {
+  z-index: 3;
+}

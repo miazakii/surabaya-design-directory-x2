@@ -70,7 +70,8 @@ export function FilterBar({
               onClick={() => onRegionChange(activeRegion === region.code ? null : region.code)}
               title={region.label}
             >
-              {region.code}
+              <span className="v2-chip__code">{region.code}</span>
+              {region.label.replace('Surabaya ', '')}
             </button>
           ))}
         </div>

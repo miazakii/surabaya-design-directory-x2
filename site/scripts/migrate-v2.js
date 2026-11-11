@@ -9,6 +9,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { SURABAYA_REGION_GEOJSON } from '../../frontend/src/lib/surabaya-boundaries.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..', '..');
@@ -54,51 +55,53 @@ export const CATEGORIES = [
 ];
 
 export const REGIONS = [
-  { code: 'P-SUB', key: 'pusat', label: 'Surabaya Pusat', anchor: [112.75, -7.265] },
-  { code: 'U-SUB', key: 'utara', label: 'Surabaya Utara', anchor: [112.755, -7.215] },
-  { code: 'T-SUB', key: 'timur', label: 'Surabaya Timur', anchor: [112.8, -7.29] },
-  { code: 'S-SUB', key: 'selatan', label: 'Surabaya Selatan', anchor: [112.735, -7.325] },
-  { code: 'B-SUB', key: 'barat', label: 'Surabaya Barat', anchor: [112.69, -7.26] },
+  { code: 'P-SUB', key: 'pusat', label: 'Surabaya Pusat', anchor: [112.748, -7.26] },
+  { code: 'U-SUB', key: 'utara', label: 'Surabaya Utara', anchor: [112.735, -7.225] },
+  { code: 'T-SUB', key: 'timur', label: 'Surabaya Timur', anchor: [112.79, -7.28] },
+  { code: 'S-SUB', key: 'selatan', label: 'Surabaya Selatan', anchor: [112.735, -7.335] },
+  { code: 'B-SUB', key: 'barat', label: 'Surabaya Barat', anchor: [112.67, -7.28] },
 ];
 
 const KECAMATAN = {
   // Pusat
   tegalsari: 'pusat',
-  genteng: 'pusat',
-  bubutan: 'pusat',
   simokerto: 'pusat',
-  sawahan: 'pusat',
+  bubutan: 'pusat',
+  genteng: 'pusat',
   // Utara
-  kenjeran: 'utara',
-  'pabean cantian': 'utara',
-  semampir: 'utara',
   bulak: 'utara',
-  tambaksari: 'utara',
+  kenjeran: 'utara',
+  semampir: 'utara',
+  'pabean cantian': 'utara',
+  krembangan: 'utara',
   // Timur
   gubeng: 'timur',
+  'gunung anyar': 'timur',
+  'gn. anyar': 'timur',
   sukolilo: 'timur',
+  tambaksari: 'timur',
+  mulyorejo: 'timur',
   rungkut: 'timur',
   'tenggilis mejoyo': 'timur',
-  mulyorejo: 'timur',
-  'gn. anyar': 'timur',
-  'gunung anyar': 'timur',
   // Selatan
-  gayungan: 'selatan',
   wonokromo: 'selatan',
+  wonocolo: 'selatan',
   wiyung: 'selatan',
+  'karang pilang': 'selatan',
+  karangpilang: 'selatan',
   jambangan: 'selatan',
+  gayungan: 'selatan',
   dukuhpakis: 'selatan',
   'dukuh pakis': 'selatan',
-  wonocolo: 'selatan',
-  'karang pilang': 'selatan',
+  sawahan: 'selatan',
   // Barat
-  sukomanunggal: 'barat',
-  lakarsantri: 'barat',
-  sambikerep: 'barat',
   benowo: 'barat',
-  tandes: 'barat',
-  asemrowo: 'barat',
   pakal: 'barat',
+  asemrowo: 'barat',
+  sukomanunggal: 'barat',
+  tandes: 'barat',
+  sambikerep: 'barat',
+  lakarsantri: 'barat',
 };
 
 const CATEGORY_BY_GROUP = {
@@ -138,6 +141,37 @@ function regionFromAddress(address) {
     }
   }
   return found;
+}
+
+function pointInRing(point, ring) {
+  const [x, y] = point;
+  let inside = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i, i += 1) {
+    const [xi, yi] = ring[i];
+    const [xj, yj] = ring[j];
+    const intersects = yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi;
+    if (intersects) inside = !inside;
+  }
+  return inside;
+}
+
+function pointInPolygon(point, polygon) {
+  if (!pointInRing(point, polygon[0])) return false;
+  return !polygon.slice(1).some((hole) => pointInRing(point, hole));
+}
+
+function regionFromGeometry(latitude, longitude) {
+  const lat = Number(latitude);
+  const lng = Number(longitude);
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+  for (const feature of SURABAYA_REGION_GEOJSON.features) {
+    const { type, coordinates } = feature.geometry;
+    const polygons = type === 'Polygon' ? [coordinates] : coordinates;
+    if (polygons.some((polygon) => pointInPolygon([lng, lat], polygon))) {
+      return feature.properties.key;
+    }
+  }
+  return null;
 }
 
 function nearestRegion(latitude, longitude) {
@@ -183,7 +217,9 @@ function main() {
   for (const studio of studios) {
     const region = studio.regionLocked
       ? studio.region
-      : regionFromAddress(studio.address) || nearestRegion(studio.latitude, studio.longitude);
+      : regionFromGeometry(studio.latitude, studio.longitude) ||
+        regionFromAddress(studio.address) ||
+        nearestRegion(studio.latitude, studio.longitude);
     const regionInfo = REGIONS.find((item) => item.key === region) || REGIONS[0];
     studio.region = regionInfo.key;
     studio.regionCode = regionInfo.code;
