@@ -334,7 +334,7 @@ export function DirectoryMap({
         setFailed(true);
       });
 
-      map.on('load', () => {
+      map.on('style.load', () => {
         if (cancelled) return;
         loadedRef.current = true;
         setFailed(false);
