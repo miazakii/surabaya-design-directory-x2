@@ -45,12 +45,34 @@ const CITY_OUTLINE = [
   [112.62, -7.3],
 ];
 
+const OSM_TILES = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+
 const PAPER_STYLE = {
   version: 8,
-  name: 'Direktori Paper',
-  sources: {},
+  name: 'Direktori Paper + OSM',
+  sources: {
+    osm: {
+      type: 'raster',
+      tiles: [OSM_TILES],
+      tileSize: 256,
+      maxzoom: 19,
+      attribution: '© OpenStreetMap contributors',
+    },
+  },
   layers: [
-    { id: 'background', type: 'background', paint: { 'background-color': '#dfe7e5' } },
+    { id: 'background', type: 'background', paint: { 'background-color': '#e9e6de' } },
+    {
+      id: 'osm',
+      type: 'raster',
+      source: 'osm',
+      paint: {
+        'raster-opacity': 0.92,
+        'raster-saturation': -1,
+        'raster-contrast': -0.06,
+        'raster-brightness-min': 0.04,
+        'raster-brightness-max': 0.96,
+      },
+    },
   ],
 };
 
@@ -200,6 +222,7 @@ export function DirectoryMap({
   const [failed, setFailed] = useState(false);
   const [ready, setReady] = useState(false);
   const [mapZoom, setMapZoom] = useState(zoom);
+  const [basemap, setBasemap] = useState('osm');
 
   const categoryList = useMemo(() => categoryMap(categories), [categories]);
   const regionList = useMemo(() => regionMap(regions), [regions]);
@@ -267,7 +290,8 @@ export function DirectoryMap({
       map.addControl(
         new maplibregl.AttributionControl({
           compact: true,
-          customAttribution: 'Peta diagram Direktori · glyph OpenFreeMap',
+          customAttribution:
+            '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors · Peta diagram Direktori',
         }),
         'bottom-right',
       );
@@ -327,6 +351,14 @@ export function DirectoryMap({
     // Map dibuat sekali; data, marker, dan seleksi diperbarui lewat effect lain.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !loadedRef.current) return;
+    if (map.getLayer('osm')) {
+      map.setLayoutProperty('osm', 'visibility', basemap === 'osm' ? 'visible' : 'none');
+    }
+  }, [basemap, ready]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -446,7 +478,12 @@ export function DirectoryMap({
       <div ref={containerRef} className="h-full w-full" role="region" aria-label="Peta studio desain Surabaya" />
 
       <svg className="v2-map-overlay pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true">
-        <polygon ref={landRef} fill="#e9e6de" stroke="#151515" strokeWidth="1.2" />
+        <polygon
+          ref={landRef}
+          fill={basemap === 'paper' ? '#e9e6de' : 'rgba(241,239,233,0.10)'}
+          stroke="#151515"
+          strokeWidth="1.2"
+        />
         <polygon ref={cityRef} fill="none" stroke="#151515" strokeWidth="2" strokeLinejoin="round" />
         {REGION_SHAPES.map((shape, index) => (
           <polygon
@@ -469,17 +506,57 @@ export function DirectoryMap({
             }}
             className="v2-mono"
             fontSize="10"
+            fontWeight="700"
             letterSpacing="2"
-            fill="#5f5a51"
+            fill="#3f3b35"
+            stroke="#f1efe9"
+            strokeWidth="4"
+            strokeLinejoin="round"
+            paintOrder="stroke"
             textAnchor="middle"
           >
             {shape.label}
           </text>
         ))}
-        <text ref={waterLabelRef} className="v2-mono v2-map-water-label" fontSize="11" letterSpacing="4" fill="#6f6a61" textAnchor="middle">
+        <text
+          ref={waterLabelRef}
+          className="v2-mono v2-map-water-label"
+          fontSize="11"
+          fontWeight="700"
+          letterSpacing="4"
+          fill="#5f5a51"
+          stroke="#f1efe9"
+          strokeWidth="4"
+          strokeLinejoin="round"
+          paintOrder="stroke"
+          textAnchor="middle"
+        >
           SELAT MADURA
         </text>
       </svg>
+
+      <div className="absolute right-3 top-3 z-10 flex border border-[var(--v2-line)] bg-[var(--v2-paper-soft)] v2-offset-sm sm:right-4 sm:top-4">
+        <button
+          type="button"
+          className={`v2-mono px-2.5 py-2 text-[8px] font-bold tracking-[0.08em] ${
+            basemap === 'osm' ? 'bg-[var(--v2-ink)] text-[var(--v2-paper)]' : 'hover:bg-[#e8e5dc]'
+          }`}
+          onClick={() => setBasemap('osm')}
+          title="Peta dasar OpenStreetMap"
+        >
+          PETA
+        </button>
+        <button
+          type="button"
+          className={`v2-mono border-l border-[var(--v2-line)] px-2.5 py-2 text-[8px] font-bold tracking-[0.08em] ${
+            basemap === 'paper' ? 'bg-[var(--v2-ink)] text-[var(--v2-paper)]' : 'hover:bg-[#e8e5dc]'
+          }`}
+          onClick={() => setBasemap('paper')}
+          title="Diagram wilayah tanpa peta dasar"
+        >
+          DIAGRAM
+        </button>
+      </div>
 
       <div className="absolute bottom-4 right-4 z-10 flex flex-col border border-[var(--v2-line)] bg-[var(--v2-paper-soft)] v2-offset-sm">
         <button type="button" className="grid h-10 w-10 place-items-center border-b border-[var(--v2-line)] hover:bg-[#e8e5dc]" onClick={zoomIn} aria-label={labels.zoomIn || 'Perbesar peta'}>

@@ -19,7 +19,7 @@ Folder ini adalah v2 dari `surabaya-design-directory`. Frontend memakai gaya ars
 - Komponen v2: `frontend/src/components/v2/`.
 - Halaman v2: `frontend/src/pages/AboutPage.jsx`, `DirectoryPage.jsx`, `StudioPage.jsx`, `RegisterPage.jsx`.
 - Halaman studio statis untuk SEO dibuat oleh `site/scripts/build-seo.js` dengan template v2.
-- Peta memakai MapLibre + gaya kertas lokal, overlay SVG wilayah, dan cluster HTML; tidak bergantung pada tile eksternal.
+- Peta memakai MapLibre dengan peta dasar OpenStreetMap (grayscale), overlay SVG wilayah, dan cluster HTML. Mode DIAGRAM menyembunyikan peta dasar. Tile OSM dimuat dari `tile.openstreetmap.org` dan wajib mempertahankan atribusi.
 
 ## Struktur penting
 

@@ -112,7 +112,7 @@
       {
         "title": "Layanan pihak ketiga",
         "paragraphs": [
-          "Peta adalah diagram lokal yang digambar dari data direktori. Label peta memakai glyph OpenFreeMap; permintaan teknis ke layanan tersebut dapat memproses alamat IP dan informasi perangkat sesuai kebijakan penyedia.",
+          "Peta memakai tile OpenStreetMap sebagai peta dasar. Mode Diagram mematikan peta dasar dan hanya menampilkan diagram wilayah. Permintaan teknis ke tile.openstreetmap.org dapat memproses alamat IP dan informasi perangkat sesuai kebijakan penyedia.",
           "Font, skrip, dan aset antarmuka disajikan dari domain direktori ini. Tidak ada Google Fonts atau CDN eksternal untuk aset UI."
         ]
       },
@@ -218,7 +218,7 @@
       "filterRegionLabel": "WILAYAH",
       "allLabel": "SEMUA",
       "legendTitle": "LEGENDA",
-      "legendNote": "Kode pin = kategori utama. Warna = identitas studio.",
+      "legendNote": "Kode pin = kategori utama. Warna = identitas studio. Garis putus-putus = batas wilayah.",
       "emptyTitle": "Tidak ada studio yang cocok.",
       "emptyBody": "Coba hapus filter atau cari dengan kata lain.",
       "ctaLabel": "Studio Anda belum ada?",

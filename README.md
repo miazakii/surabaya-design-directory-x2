@@ -98,7 +98,7 @@ npm run validate:site  # validasi data & konten
 npm test
 ```
 
-Peta memakai MapLibre + OpenFreeMap. Saat zoom kota, studio dikelompokkan (cluster) agar 100 pin tidak bertumpuk; pin detail muncul saat zoom diperbesar. Jika WebGL/tile gagal, halaman menampilkan peta cadangan bergaya diagram dan indeks tetap bisa dipakai.
+Peta memakai MapLibre dengan peta dasar OpenStreetMap (grayscale) + overlay SVG batas wilayah + cluster HTML. Tombol **DIAGRAM** menyembunyikan peta dasar dan menampilkan diagram wilayah saja. Saat zoom kota, studio dikelompokkan (cluster) agar 100 pin tidak bertumpuk; pin detail muncul saat zoom diperbesar. Jika WebGL/tile gagal, halaman menampilkan peta cadangan bergaya diagram dan indeks tetap bisa dipakai.
 
 ## Website & admin lokal
 
